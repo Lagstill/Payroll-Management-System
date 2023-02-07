@@ -1,2 +1,50 @@
-# Payroll-Management-System
-The above code is a simple implementation of a payroll management system using Flask, a micro web framework in Python, and Flask-MySQL, a Flask extension for connecting to MySQL databases. It uses SQL to interact with a MySQL database and implements CRUD (Create, Read, Update, Delete) operations on payroll data stored in the database.
+# Payroll Management System
+
+### A simple payroll management system built using Flask web framework, Flask-MySQL extension and MySQL database. The system allows to perform CRUD (Create, Read, Update and Delete) operations on the payroll data.
+
+## Tools and Libraries Used
+Flask: A micro web framework written in Python
+Flask-MySQL: A Flask extension to connect to MySQL databases
+MySQL: A popular open-source relational database management system
+
+## Installation and Setup
+### 1. Clone the repository
+```bash
+git clone https://github.com/[username]/Payroll-Management-System.git 
+```
+
+### 2. Install the required packages
+```bash
+pip install -r requirements.txt
+```
+
+### 3. Set the environment variables for MySQL database user, password, database name and host.
+
+### 4. Run the application
+
+```bash
+python app.py
+```
+
+### 5. Open the browser and go to http:// localhost: (port you have specified in app.py) to access Payroll Management System.
+
+## Features
+*Display a list of employees payroll data
+*Create a new payroll record
+*Update an existing payroll record
+*Delete a payroll record
+
+## File Structure
+```lua
+Payroll-Management-System
+├── app.py
+├── templates
+│   ├── create.html
+│   ├── index.html
+│   └── payroll.html
+├── requirements.txt
+└── README.md
+```
+
+
+

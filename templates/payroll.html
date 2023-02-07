@@ -1,0 +1,39 @@
+<html>
+  <head>
+    <title>Payroll System</title>
+  </head>
+  <body style="background-color:AntiqueWhite;">
+    <h1>Payroll Details</h1>
+    <table border="1">
+      <tr>
+        <th>Employee ID</th>
+        <th>Regular Days</th>
+        <th>Rate</th>
+        <th>Regular Pay</th>
+        <th>Overtimes</th>
+        <th>Overtimes Pay</th>
+        <th>Medical</th>
+        <th>Canteen</th>
+        <th>House</th>
+        <th>Company Loan</th>
+        <th>NET</th>
+      </tr>
+      {% for payrollDetail in payrollDetails %}
+        <tr>
+          <td>{{ payrollDetail[0] }}</td>
+          <td>{{ payrollDetail[1] }}</td>
+          <td>{{ payrollDetail[2] }}</td>
+          <td>{{ payrollDetail[3] }}</td>
+          <td>{{ payrollDetail[4] }}</td>
+          <td>{{ payrollDetail[5] }}</td>
+          <td>{{ payrollDetail[6] }}</td>
+          <td>{{ payrollDetail[7] }}</td>
+          <td>{{ payrollDetail[8] }}</td>
+          <td>{{ payrollDetail[9] }}</td>
+          <td>{{ payrollDetail[10] }}</td>
+
+        </tr>
+      {% endfor %}
+    </table>
+  </body>
+</html>

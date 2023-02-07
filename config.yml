@@ -1,0 +1,10 @@
+MYSQL_CREDENTIALS:
+  MYSQL_DATABASE_USER: # input your username (root)
+  MYSQL_DATABASE_PASSWORD: #input your password
+  MYSQL_DATABASE_DB: #input your database name
+  MYSQL_DATABASE_HOST: #input your host (localhost)
+  MYSQL_DATABASE_PORT: #input your port (3306)
+
+
+
+
