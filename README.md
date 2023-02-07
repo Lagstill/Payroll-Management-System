@@ -29,10 +29,10 @@ python app.py
 ### 5. Open the browser and go to http:// localhost: (port you have specified in app.py) to access Payroll Management System.
 
 ## Features
-*Display a list of employees payroll data
-*Create a new payroll record
-*Update an existing payroll record
-*Delete a payroll record
+* Display a list of employees payroll data
+* Create a new payroll record
+* Update an existing payroll record
+* Delete a payroll record
 
 ## File Structure
 ```lua
