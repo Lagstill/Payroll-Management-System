@@ -38,6 +38,7 @@ python app.py
 ```lua
 Payroll-Management-System
 ├── app.py
+├── config.yml
 ├── templates
 │   ├── create.html
 │   ├── index.html
