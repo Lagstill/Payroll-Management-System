@@ -1,33 +1,17 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
-from flaskext.mysql import MySQL
-import yaml
+import sqlite3
 
-
-# Read the config file to get the database configurations
-cfg = yaml.safe_load(open('config.yml'))
-
-
-#MySQL configurations
-mysql = MySQL()
 app = Flask(__name__)
 
-app.config['MYSQL_DATABASE_USER'] = cfg['MYSQL_CREDENTIALS']['MYSQL_DATABASE_USER']
-app.config['MYSQL_DATABASE_PASSWORD'] = cfg['MYSQL_CREDENTIALS']['MYSQL_DATABASE_PASSWORD']
-app.config['MYSQL_DATABASE_DB'] = cfg['MYSQL_CREDENTIALS']['MYSQL_DATABASE_DB']
-app.config['MYSQL_DATABASE_HOST'] = cfg['MYSQL_CREDENTIALS']['MYSQL_DATABASE_HOST']
-
-mysql.init_app(app)
-
-mysql = MySQL(app)
-conn = mysql.connect()
-cur =conn.cursor()
+cur = sqlite3.connect('payroll.db', check_same_thread=False)
 
 @app.route('/', methods = ['GET','POST'])
 def index():
     # Execute query to select all records from payroll table
     res = cur.execute("SELECT * FROM payroll ")
-    if res > 0:
-        result = cur.fetchall();
+    resultValue = res.fetchall()
+    if len(resultValue) > 0:
+        result = resultValue
     # If user has selected an option from the dropdown list
     # then redirect to the appropriate page
     if request.method == 'POST':
@@ -64,8 +48,8 @@ def create():
         house = userDetails['house']
         company_loan = userDetails['company_loan']
         NET = userDetails['NET']
-        cur.execute("INSERT INTO payroll(employeeID, Regular_days, Rate, Regular_pay, Overtimes, Overtimes_pay, medical, canteen, house, company_loan, NET) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", (employeeID, Regular_days, Rate, Regular_pay, Overtimes, Overtimes_pay, medical, canteen, house, company_loan, NET))
-        conn.commit()
+        cur.execute("INSERT INTO payroll(employeeID, Regular_days, Rate, Regular_pay, Overtimes, Overtimes_pay, medical, canteen, house, company_loan, NET) VALUES(" + str(employeeID) + "," + str(Regular_days) + "," + str(Rate) + "," + str(Regular_pay) + "," + str(Overtimes) + "," + str(Overtimes_pay) + "," + str(medical) + "," + str(canteen) + "," + str(house) + "," + str(company_loan) + "," + str(NET) + ")")
+        cur.commit()
         return redirect(url_for('payroll'))
     return render_template('create.html')
 
@@ -73,19 +57,16 @@ def create():
 def payroll():
     # Execute query to select all records from payroll table
     resultValue = cur.execute("SELECT * FROM payroll")
-    if resultValue > 0:
-        payrollDetails = cur.fetchall()
-        # Render the payroll.html page with the payrollDetails
-        return render_template('payroll.html',payrollDetails=payrollDetails)
+    res = resultValue.fetchall()
+    if len(res) > 0:
+        return render_template('payroll.html',payrollDetails=res)
 
 @app.route('/update/<string:employeeID>', methods = ['GET','POST'])
 def update(employeeID):
-    # Execute query to select all records from payroll table
-    # If user has submitted the form
-    # then update the data into the database
-    res = cur.execute("SELECT * FROM payroll WHERE employeeID=%s", (employeeID,))
-    if res > 0:
-        result = cur.fetchall();
+    res = cur.execute("SELECT * FROM payroll WHERE employeeID=" +str(employeeID))
+    res = res.fetchall()
+    if len(res) > 0:
+        result =res
     if request.method == 'POST':
         userDetails = request.form
         employeeID = userDetails['employeeID']
@@ -99,17 +80,13 @@ def update(employeeID):
         house = userDetails['house']
         company_loan = userDetails['company_loan']
         NET = userDetails['NET']
-        cur.execute("""
-               UPDATE payroll
-               SET Regular_days=%s, Rate=%s, Regular_pay=%s, Overtimes=%s, Overtimes_pay=%s, medical=%s, canteen=%s, house=%s, company_loan=%s, NET=%s
-               WHERE employeeID=%s
-            """, (Regular_days, Rate, Regular_pay, Overtimes, Overtimes_pay, medical, canteen, house, company_loan, NET, employeeID))
+        cur.execute("UPDATE payroll SET Regular_days="+str(Regular_days)+", Rate="+str(Rate)+", Regular_pay="+str(Regular_pay)+", Overtimes="+str(Overtimes)+", Overtimes_pay="+str(Overtimes_pay)+", medical="+str(medical)+", canteen="+str(canteen)+", house="+str(house)+", company_loan="+str(company_loan)+", NET="+str(NET)+" WHERE employeeID="+str(employeeID))        
         flash("Employee Updated Successfully")
-        
-        res = cur.execute("SELECT * FROM payroll WHERE employeeID=%s", (employeeID,))
-        if res > 0:
-            result = cur.fetchall();
-        conn.commit()
+        res = cur.execute("SELECT * FROM payroll WHERE employeeID=" +str(employeeID))
+        res = res.fetchall()
+        if len(res) > 0:
+            result =res
+        cur.commit()
     return render_template('update.html',payrollDetails=result)
     
 
@@ -118,8 +95,8 @@ def delete(employeeID):
     # Execute query to select all records from payroll table
     # If user has submitted the form
     # then delete the data into the database
-    cur.execute("DELETE FROM payroll WHERE employeeID=%s", (employeeID,))
-    conn.commit()
+    cur.execute("DELETE FROM payroll WHERE employeeID="+str(employeeID))
+    cur.commit()
     flash("Employee Deleted Successfully")
     return redirect(url_for('payroll'))
 
