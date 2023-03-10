@@ -11,8 +11,8 @@ MySQL: A popular open-source relational database management system
 http://app.alaguprakalya.ninja:5000/
 
 ## Screenshots
-![alt text](https://github.com/Lagstill/Payroll-Management-System/tree/main/images/home.png?raw=true)
-![alt text](https://github.com/Lagstill/Payroll-Management-System/tree/main/images/update.png?raw=true)
+![alt text](https://github.com/Lagstill/Payroll-Management-System/blob/main/images/home.png?raw=true)
+![alt text](https://github.com/Lagstill/Payroll-Management-System/blob/main/images/update.png?raw=true)
 
 
 
