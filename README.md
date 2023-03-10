@@ -7,6 +7,15 @@ Flask: A micro web framework written in Python
 Flask-MySQL: A Flask extension to connect to MySQL databases
 MySQL: A popular open-source relational database management system
 
+## Access the app via:
+http://app.alaguprakalya.ninja:5000/
+
+## Screenshots
+![alt text](https://github.com/Lagstill/Payroll-Management-System/tree/main/images/home.png?raw=true)
+![alt text](https://github.com/Lagstill/Payroll-Management-System/tree/main/images/update.png?raw=true)
+
+
+
 ## Installation and Setup
 ### 1. Clone the repository
 ```bash
