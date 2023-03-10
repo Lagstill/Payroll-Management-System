@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 import sqlite3
+import requests, random
 
 app = Flask(__name__)
 
@@ -7,7 +8,27 @@ cur = sqlite3.connect('payroll.db', check_same_thread=False)
 
 @app.route('/', methods = ['GET','POST'])
 def index():
+    data  = requests.get('https://employee-data-platform.vercel.app/api/fetchall')
+    response = data.json()
     # Execute query to select all records from payroll table
+    #https://employee-data-platform.vercel.app/api/fetchall
+    c = cur.cursor()
+    for i in response:
+        reg_days = random.randint(1, 30)
+        rate = random.randint(1, 30)
+        reg_pay = random.randint(1, 30)
+        overtimes = random.randint(1, 30)
+        overtimes_pay = random.randint(1, 30)
+        medical = random.randint(1, 30)
+        canteen = random.randint(1, 30)
+        house = random.randint(1, 30)
+        company_loan = random.randint(1, 30)
+        net = random.randint(1, 30)
+        #check if id exists
+        c.execute("SELECT * FROM payroll WHERE employeeID = " + str(i['id']))
+        if c.fetchone() is None:
+            c.execute("INSERT INTO payroll(employeeID, Regular_days, Rate, Regular_pay, Overtimes, Overtimes_pay, medical, canteen, house, company_loan, NET) VALUES(" + str(i['id']) + "," + str(reg_days) + "," + str(rate) + "," + str(reg_pay) + "," + str(overtimes) + "," + str(overtimes_pay) + "," + str(medical) + "," + str(canteen) + "," + str(house) + "," + str(company_loan) + "," + str(net) + ")")
+    cur.commit()
     res = cur.execute("SELECT * FROM payroll ")
     resultValue = res.fetchall()
     if len(resultValue) > 0:
